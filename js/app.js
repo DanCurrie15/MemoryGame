@@ -8,7 +8,7 @@ const cardList = Array.from(document.getElementsByClassName('card'));
 let cardOne = null, cardTwo = null, moves = 0, numMatches = 0, seconds = 0, minutes = 0, gameTimerVar;
 /*
  * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
+ *   - shuffle the list of cards using the provided 'shuffle' method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
@@ -48,7 +48,7 @@ addCardsToPage(cardList);
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function
       that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in
+ *  - add the card to a *list* of 'open' cards (put this functionality in
       another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this
@@ -63,40 +63,40 @@ addCardsToPage(cardList);
  */
 
 // run function when card is clicked
-document.querySelector(".deck").addEventListener('click', function(evt) {
-  if ((evt.target.className === "card_face card_face-front") && (cardTwo === null)) {
+document.querySelector('.deck').addEventListener('click', function(evt) {
+  if ((evt.target.className === 'card_face card_face-front') && (cardTwo === null)) {
     openCard(evt.target.parentElement);
     // increments # of moves
-    document.querySelector(".moves").innerHTML = ++moves;
+    document.querySelector('.moves').innerHTML = ++moves;
     // start game timer
     if (moves === 1) {
       gameTimerVar = setInterval(gameTimer, 1000);
     }
     // removes stars after # of moves
     else if (moves === 30) {
-      let star = document.querySelector(".stars");
+      let star = document.querySelector('.stars');
       star.removeChild(star.childNodes[1]);
     }
     else if (moves === 40) {
-      let star = document.querySelector(".stars");
+      let star = document.querySelector('.stars');
       star.removeChild(star.childNodes[2]);
     }
   }
 });
 
 // refresh page / restart game from score panel
-document.querySelector(".restart").addEventListener('click', function() {
+document.querySelector('.restart').addEventListener('click', function() {
   location.reload();
 });
 
 // refresh page / restart game from win game panel
-document.querySelector(".button").addEventListener('click', function() {
+document.querySelector('.button').addEventListener('click', function() {
   location.reload();
 });
 
 // css change to open cards
 function openCard(card) {
-  card.classList.remove("is-flipped");
+  card.classList.remove('is-flipped');
   compareCards(card);
 }
 
@@ -115,7 +115,7 @@ function compareCards(card) {
       if (numMatches === 8){
         // stop game timer
         clearInterval(gameTimerVar);
-        winGame();
+        setTimeout(function() {winGame();},1000);
       }
       console.log('matched');
     } else {
@@ -132,11 +132,11 @@ function cardsMatch(matchOne, matchTwo) {
   cardOne = null;
   cardTwo = null;
   // change CSS of matched cards
-  matchOne.querySelector(".card_face-back").classList.add("match");
-  matchTwo.querySelector(".card_face-back").classList.add("match");
+  matchOne.querySelector('.card_face-back').classList.add('match');
+  matchTwo.querySelector('.card_face-back').classList.add('match');
   // animate matched cards
-  matchOne.classList.add("scale_div");
-  matchTwo.classList.add("scale_div");
+  matchOne.classList.add('scale_div');
+  matchTwo.classList.add('scale_div');
 }
 
 // css change if cards do not match
@@ -145,19 +145,19 @@ function cardsNotMatch(matchOne, matchTwo) {
   cardOne = null;
   cardTwo = null;
   // change CSS of cards that do not match
-  matchOne.querySelector(".card_face-back").classList.add("not-match");
-  matchTwo.querySelector(".card_face-back").classList.add("not-match");
+  matchOne.querySelector('.card_face-back').classList.add('not-match');
+  matchTwo.querySelector('.card_face-back').classList.add('not-match');
   // animate non-matching cards
-  matchOne.classList.add("shake_div");
-  matchTwo.classList.add("shake_div");
+  matchOne.classList.add('shake_div');
+  matchTwo.classList.add('shake_div');
   // change CSS and animate back to original CSS
-  setTimeout(function() {matchOne.classList.remove("shake_div");
-  matchTwo.classList.remove("shake_div");},500);
+  setTimeout(function() {matchOne.classList.remove('shake_div');
+  matchTwo.classList.remove('shake_div');},500);
   setTimeout(function() {
-  matchOne.classList.add("is-flipped");
-  matchTwo.classList.add("is-flipped");
-  matchOne.querySelector(".card_face-back").classList.remove("not-match");
-  matchTwo.querySelector(".card_face-back").classList.remove("not-match");},600);
+  matchOne.classList.add('is-flipped');
+  matchTwo.classList.add('is-flipped');
+  matchOne.querySelector('.card_face-back').classList.remove('not-match');
+  matchTwo.querySelector('.card_face-back').classList.remove('not-match');},600);
 }
 
 // displays amount of time game has been played
@@ -167,10 +167,13 @@ function gameTimer() {
     seconds = 0;
     ++minutes;
   }
-  document.querySelector(".timer").innerHTML = "Time: " + minutes + ":" + ('0' + seconds).slice(-2);
+  document.querySelector('.timer').innerHTML = 'Time: ' + minutes + ':' + ('0' + seconds).slice(-2);
 }
 
 // show game win window
 function winGame() {
-
+  document.querySelector('.stars-win-game-panel').innerHTML = document.querySelector('.stars').innerHTML;
+  document.querySelector('.moves-win-game-panel').innerHTML = document.querySelector('.moves').innerHTML;
+  document.querySelector('.timer-win-game-panel').innerHTML = document.querySelector('.timer').innerHTML;
+  document.querySelector('.win-game-panel').style.visibility = 'visible';
 }
