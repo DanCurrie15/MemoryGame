@@ -46,20 +46,13 @@ function addCardsToPage(array) {
 addCardsToPage(cardList);
 /*
  * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function
-      that you call from this one)
- *  - add the card to a *list* of 'open' cards (put this functionality in
-      another function that you call from this one)
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of 'open' cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this
-        functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the
-        card's symbol (put this functionality in another function that you call
-        from this one)
- *    + increment the move counter and display it on the page (put this
-        functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put
-        this functionality in another function that you call from this one)
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
 // run function when card is clicked
@@ -97,6 +90,7 @@ document.querySelector('.button').addEventListener('click', function() {
 // css change to open cards
 function openCard(card) {
   card.classList.remove('is-flipped');
+  card.querySelector('.card_face-front').classList.add('disable');
   compareCards(card);
 }
 
@@ -117,11 +111,9 @@ function compareCards(card) {
         clearInterval(gameTimerVar);
         setTimeout(function() {winGame();},1000);
       }
-      console.log('matched');
     } else {
       // time out function ensures 2nd card finishes transform before compare
       setTimeout(function() {cardsNotMatch(cardOne, cardTwo);},1000);
-      console.log('not matched');
     }
   }
 }
@@ -157,7 +149,9 @@ function cardsNotMatch(matchOne, matchTwo) {
   matchOne.classList.add('is-flipped');
   matchTwo.classList.add('is-flipped');
   matchOne.querySelector('.card_face-back').classList.remove('not-match');
-  matchTwo.querySelector('.card_face-back').classList.remove('not-match');},600);
+  matchTwo.querySelector('.card_face-back').classList.remove('not-match');
+  matchOne.querySelector('.card_face-front').classList.remove('disable');
+  matchTwo.querySelector('.card_face-front').classList.remove('disable');},600);
 }
 
 // displays amount of time game has been played

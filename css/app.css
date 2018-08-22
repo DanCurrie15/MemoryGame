@@ -213,3 +213,10 @@ h2 {
  .win-game-panel .button:hover {
     background-color: #02ccba;
 }
+
+/*
+ * Disable click events
+ */
+ .disable {
+   pointer-events: none;
+ }
